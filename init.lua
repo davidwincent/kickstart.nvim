@@ -578,6 +578,10 @@ cmp.setup {
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 
+vim.opt.relativenumber = true
+vim.opt.guicursor = 'n-v-c-sm:block,r-cr-o:hor20,i:blinkon1'
+
+-- Render whitespace as chars
 vim.cmd('set listchars=eol:$,tab:>-,space:_,trail:~,extends:>,precedes:<')
 vim.cmd('set list')
 
