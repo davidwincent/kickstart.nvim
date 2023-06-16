@@ -134,7 +134,58 @@ require('lazy').setup({
     'navarasu/onedark.nvim',
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      require('onedark').setup {
+        -- Main options --
+        style = 'warmer', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+        transparent = true,  -- Show/hide background
+        term_colors = true, -- Change terminal color as per the selected theme style
+        ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
+        cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
+
+        -- toggle theme style ---
+        toggle_style_key = nil, -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
+        toggle_style_list = {'dark', 'darker', 'cool', 'deep', 'warm', 'warmer', 'light'}, -- List of styles to toggle between
+
+        -- Change code style ---
+        -- Options are italic, bold, underline, none
+        -- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
+        code_style = {
+            comments = 'none',
+            keywords = 'none',
+            functions = 'none',
+            strings = 'none',
+            variables = 'none'
+        },
+
+        -- Lualine options --
+        lualine = {
+            transparent = false, -- lualine center bar transparency
+        },
+
+        -- Custom Highlights --
+        colors = {
+          bright_orange = "#ff8800",    -- define a new color
+          -- green = '#00ffaa',            -- redefine an existing color
+          dark_green = '#475a39'
+        }, -- Override default colors
+        highlights = {
+          ["comments"] = {fg = '$dark_green', fmt = 'none'},
+          ["@comment"] = {fg = '$dark_green', fmt = 'none'},
+          ["@lsp.type.comment"] = {fg = '$dark_green', fmt = 'none'},
+          ["LineNr"] = {fg = '$light_grey', fmt = 'none'},
+          ["Whitespace"] = {fg = '$grey', fmt = 'none'},
+          -- ["@function"] = {fg = '#0000ff', sp = '$cyan', fmt = 'underline,italic'},
+          -- ["@function.builtin"] = {fg = '#0059ff'}
+        }, -- Override highlight groups
+
+        -- Plugins Config --
+        diagnostics = {
+            darker = true, -- darker colors for diagnostic
+            undercurl = true,   -- use undercurl instead of underline for diagnostics
+            background = true,    -- use background color for virtual text
+        },
+      }
+      require('onedark').load()
     end,
   },
 
@@ -159,7 +210,7 @@ require('lazy').setup({
     -- See `:help indent_blankline.txt`
     opts = {
       char = '┊',
-      show_trailing_blankline_indent = false,
+      show_trailing_blankline_indent = true,
     },
   },
 
@@ -167,7 +218,11 @@ require('lazy').setup({
   { 'numToStr/Comment.nvim', opts = {} },
 
   -- Fuzzy Finder (files, lsp, etc)
-  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+  {
+    'nvim-telescope/telescope.nvim',
+    branch = '0.1.x',
+    dependencies = { 'nvim-lua/plenary.nvim', 'kkharji/sqlite.lua' },
+  },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
   -- Only load if `make` is available. Make sure you have the system
@@ -181,6 +236,9 @@ require('lazy').setup({
       return vim.fn.executable 'make' == 1
     end,
   },
+
+  -- telescope-smart-history.nvim__id
+  { 'nvim-telescope/telescope-smart-history.nvim' },
 
   {
     -- Highlight, edit, and navigate code
@@ -278,11 +336,16 @@ require('telescope').setup {
         ['<C-d>'] = false,
       },
     },
+    history = {
+      path = '~/.local/share/nvim/databases/telescope_history.sqlite3',
+      limit = 100,
+    },
   },
 }
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
+pcall(require('telescope').load_extension, 'smart_history')
 
 -- See `:help telescope.builtin`
 vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
@@ -301,6 +364,7 @@ vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc
 vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+vim.keymap.set('n', '<leader>rs', require('telescope.builtin').resume, { desc = '[R]esume [S]earch' })
 
 -- [[ Configure Treesitter ]]
 -- See `:help nvim-treesitter`
@@ -309,7 +373,7 @@ require('nvim-treesitter.configs').setup {
   ensure_installed = { 'c', 'cpp', 'go', 'lua', 'python', 'rust', 'tsx', 'typescript', 'vimdoc', 'vim' },
 
   -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
-  auto_install = false,
+  auto_install = true,
 
   highlight = { enable = true },
   indent = { enable = true },
