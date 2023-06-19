@@ -585,3 +585,9 @@ vim.opt.guicursor = 'n-v-c-sm:block,r-cr-o:hor20,i:blinkon1'
 vim.cmd('set listchars=eol:$,tab:>-,space:_,trail:~,extends:>,precedes:<')
 vim.cmd('set list')
 
+-- cool stuff
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+
+vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
+
