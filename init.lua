@@ -84,7 +84,7 @@ require('lazy').setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      { 'j-hui/fidget.nvim',       opts = {} },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -96,19 +96,19 @@ require('lazy').setup({
     'hrsh7th/nvim-cmp',
     dependencies = {
       -- Snippet Engine & its associated nvim-cmp source
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
+      -- 'L3MON4D3/LuaSnip',
+      -- 'saadparwaiz1/cmp_luasnip',
 
       -- Adds LSP completion capabilities
       'hrsh7th/cmp-nvim-lsp',
 
       -- Adds a number of user-friendly snippets
-      'rafamadriz/friendly-snippets',
+      -- 'rafamadriz/friendly-snippets',
     },
   },
 
   -- Useful plugin to show you pending keybinds.
-  { 'folke/which-key.nvim', opts = {} },
+  { 'folke/which-key.nvim',  opts = {} },
   {
     -- Adds git releated signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
@@ -122,7 +122,8 @@ require('lazy').setup({
         changedelete = { text = '~' },
       },
       on_attach = function(bufnr)
-        vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk, { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
+        vim.keymap.set('n', '<leader>gp', require('gitsigns').prev_hunk,
+          { buffer = bufnr, desc = '[G]o to [P]revious Hunk' })
         vim.keymap.set('n', '<leader>gn', require('gitsigns').next_hunk, { buffer = bufnr, desc = '[G]o to [N]ext Hunk' })
         vim.keymap.set('n', '<leader>ph', require('gitsigns').preview_hunk, { buffer = bufnr, desc = '[P]review [H]unk' })
       end,
@@ -135,55 +136,54 @@ require('lazy').setup({
     priority = 1000,
     config = function()
       require('onedark').setup {
-        -- Main options --
-        style = 'warmer', -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
-        transparent = true,  -- Show/hide background
+        -- -- Main options --
+        style = 'darker',   -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
+        transparent = true, -- Show/hide background
         term_colors = true, -- Change terminal color as per the selected theme style
-        ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
-        cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
-
-        -- toggle theme style ---
-        toggle_style_key = nil, -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
-        toggle_style_list = {'dark', 'darker', 'cool', 'deep', 'warm', 'warmer', 'light'}, -- List of styles to toggle between
-
-        -- Change code style ---
-        -- Options are italic, bold, underline, none
-        -- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
-        code_style = {
-            comments = 'none',
-            keywords = 'none',
-            functions = 'none',
-            strings = 'none',
-            variables = 'none'
-        },
-
-        -- Lualine options --
-        lualine = {
-            transparent = false, -- lualine center bar transparency
-        },
-
+        -- ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
+        -- cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
+        --
+        -- -- toggle theme style ---
+        -- toggle_style_key = nil, -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
+        -- toggle_style_list = {'dark', 'darker', 'cool', 'deep', 'warm', 'warmer', 'light'}, -- List of styles to toggle between
+        --
+        -- -- Change code style ---
+        -- -- Options are italic, bold, underline, none
+        -- -- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
+        -- code_style = {
+        --     comments = 'none',
+        --     keywords = 'none',
+        --     functions = 'none',
+        --     strings = 'none',
+        --     variables = 'none'
+        -- },
+        --
+        -- -- Lualine options --
+        -- lualine = {
+        --     transparent = false, -- lualine center bar transparency
+        -- },
+        --
         -- Custom Highlights --
         colors = {
-          bright_orange = "#ff8800",    -- define a new color
-          -- green = '#00ffaa',            -- redefine an existing color
-          dark_green = '#475a39'
-        }, -- Override default colors
+          bright_orange = "#ff8800", -- define a new color
+          fg = '#dee1e9',            -- redefine an existing color
+        },                           -- Override default colors
         highlights = {
-          ["comments"] = {fg = '$dark_green', fmt = 'none'},
-          ["@comment"] = {fg = '$dark_green', fmt = 'none'},
-          ["@lsp.type.comment"] = {fg = '$dark_green', fmt = 'none'},
-          ["LineNr"] = {fg = '$light_grey', fmt = 'none'},
-          ["Whitespace"] = {fg = '$grey', fmt = 'none'},
+          ["comments"] = { fg = '$light_grey', fmt = 'none' },
+          ["@comment"] = { fg = '$light_grey', fmt = 'none' },
+          ["@lsp.type.comment"] = { fg = '$light_grey', fmt = 'none' },
+          ["LineNr"] = { fg = '$light_grey', fmt = 'none' },
+          ["Whitespace"] = { fg = '$light_grey', fmt = 'none' },
           -- ["@function"] = {fg = '#0000ff', sp = '$cyan', fmt = 'underline,italic'},
           -- ["@function.builtin"] = {fg = '#0059ff'}
         }, -- Override highlight groups
-
-        -- Plugins Config --
-        diagnostics = {
-            darker = true, -- darker colors for diagnostic
-            undercurl = true,   -- use undercurl instead of underline for diagnostics
-            background = true,    -- use background color for virtual text
-        },
+        --
+        -- -- Plugins Config --
+        -- diagnostics = {
+        --     darker = true, -- darker colors for diagnostic
+        --     undercurl = true,   -- use undercurl instead of underline for diagnostics
+        --     background = true,    -- use background color for virtual text
+        -- },
       }
       require('onedark').load()
     end,
@@ -208,10 +208,8 @@ require('lazy').setup({
     'lukas-reineke/indent-blankline.nvim',
     -- Enable `lukas-reineke/indent-blankline.nvim`
     -- See `:help indent_blankline.txt`
-    opts = {
-      char = '┊',
-      show_trailing_blankline_indent = true,
-    },
+    main = "ibl",
+    opts = {},
   },
 
   -- "gc" to comment visual regions/lines
@@ -222,6 +220,11 @@ require('lazy').setup({
     'nvim-telescope/telescope.nvim',
     branch = '0.1.x',
     dependencies = { 'nvim-lua/plenary.nvim', 'kkharji/sqlite.lua' },
+  },
+  -- Harpoon
+  {
+    'ThePrimeagen/harpoon',
+    dependencies = { 'nvim-lua/plenary.nvim' },
   },
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built.
@@ -530,16 +533,16 @@ mason_lspconfig.setup_handlers {
 -- [[ Configure nvim-cmp ]]
 -- See `:help cmp`
 local cmp = require 'cmp'
-local luasnip = require 'luasnip'
-require('luasnip.loaders.from_vscode').lazy_load()
-luasnip.config.setup {}
+-- local luasnip = require 'luasnip'
+-- require('luasnip.loaders.from_vscode').lazy_load()
+-- luasnip.config.setup {}
 
 cmp.setup {
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
+  -- snippet = {
+  --   expand = function(args)
+  --     luasnip.lsp_expand(args.body)
+  --   end,
+  -- },
   mapping = cmp.mapping.preset.insert {
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
@@ -553,8 +556,8 @@ cmp.setup {
     ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
-      elseif luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
+        -- elseif luasnip.expand_or_locally_jumpable() then
+        --   luasnip.expand_or_jump()
       else
         fallback()
       end
@@ -562,8 +565,8 @@ cmp.setup {
     ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
-      elseif luasnip.locally_jumpable(-1) then
-        luasnip.jump(-1)
+        -- elseif luasnip.locally_jumpable(-1) then
+        --   luasnip.jump(-1)
       else
         fallback()
       end
@@ -571,7 +574,7 @@ cmp.setup {
   },
   sources = {
     { name = 'nvim_lsp' },
-    { name = 'luasnip' },
+    -- { name = 'luasnip' },
   },
 }
 
@@ -582,12 +585,14 @@ vim.opt.relativenumber = true
 vim.opt.guicursor = 'n-v-c-sm:block,r-cr-o:hor20,i:blinkon1'
 
 -- Render whitespace as chars
-vim.cmd('set listchars=eol:$,tab:>-,space:_,trail:~,extends:>,precedes:<')
-vim.cmd('set list')
+-- vim.cmd('set listchars=eol:$,tab:>-,space:_,trail:~,extends:>,precedes:<')
+-- vim.cmd('set list')
 
 -- cool stuff
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
 vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
-
+-- insert blank lines in visual mode
+-- vim.keymap.set("v", "<Enter>", "o<ESC>")
+-- vim.keymap.set("v", "<S-Enter>", "O<ESC>")
